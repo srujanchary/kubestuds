@@ -45,3 +45,36 @@
          registry: https://registry.hub.docker.com
          ports: 80 443
          cmd: nginx -g 'daemon off';
+
+ deploy-dev:
+   box: node:latest
+   steps:
+     - wercker/add-ssh-key:
+         keyname: RAVI_DOCKER_AWS
+     - add-to-known_hosts:
+         hostname: $DEV_REMOTE_HOST
+     - script:
+         name: Pull newest docker images
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker pull shan1602/testdevop
+     - script:
+         name: Stop all running containers
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker stop ravi-linux || echo ‘failed to stop running container’
+     - script:
+         name: Remove stopped service/containers
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker rm ravi-linux || echo ‘failed to remove stopped container’
+     - script:
+         name: Remove image behind stopped container
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker rmi shan1602/testdevop:current || echo ‘failed to remove image behind stopped container’
+     - script:
+         name: Tag the pulled image
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker tag shan1602/testdevop:latest shan1602/testdevop:current
+     - script:
+         name: Start all services/containers
+         code: |
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker container run --detach -p 97:80 --name ravi-linux shan1602/testdevop:current
+
