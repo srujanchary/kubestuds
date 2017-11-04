@@ -42,7 +42,7 @@
          # we want to push both the release image and as the latest
          tag: dev-$WERCKER_GIT_COMMIT latest
          repository: shan1602/testdevop
-         registry: https://registry.hub.docker.com
+         registry: https://hub.docker.com
          ports: 80 443
          cmd: nginx -g 'daemon off';
 
@@ -68,13 +68,13 @@
      - script:
          name: Remove image behind stopped container
          code: |
-           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker rmi prashantharasu/testdevop:current || echo ‘failed to remove image behind stopped container’
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker rmi shan1602/testdevop:current || echo ‘failed to remove image behind stopped container’
      - script:
          name: Tag the pulled image
          code: |
-           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker tag prashantharasu/testdevop:latest shan1602/testdevop:current
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker tag shan1602/testdevop:latest shan1602/testdevop:current
      - script:
          name: Start all services/containers
          code: |
-           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker container run --detach -p 97:80 --name ravi-linux prashantharasu/testdevop:current
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker container run --detach -p 97:80 --name ravi-linux shan1602/testdevop:current
 
