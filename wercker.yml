@@ -19,7 +19,7 @@
 # note the indentation, this is still part of the build pipeline
    after-steps:                    
      - slack-notifier:
-         url: $https://hooks.slack.com/services/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
+         url: $SLACK_URL
          username: Srujan
          channel: random
  push-2-docker:
