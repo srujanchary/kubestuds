@@ -20,7 +20,7 @@
    after-steps:                    
      - slack-notifier:
          url: $https://hooks.slack.com/services/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
-         username: srujanchary
+         username: srujan
          channel: random
  push-2-docker:
    box: nginx:latest
