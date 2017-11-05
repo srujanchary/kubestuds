@@ -56,7 +56,7 @@
      - script:
          name: Pull newest docker images
          code: |
-           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker pull shan1602/testdevop
+           ssh $DEV_REMOTE_USER@$DEV_REMOTE_HOST sudo docker pull srujanchary/kubestuds
      - script:
          name: Stop all running containers
          code: |
