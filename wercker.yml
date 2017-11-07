@@ -17,7 +17,7 @@
            apt-get update
            apt-get install -y curl
 # note the indentation, this is still part of the build pipeline
-   after-steps:                    
+  # after-steps:                    
      - slack-notifier:
          url: $SLACK_URL
          username: Srujan
