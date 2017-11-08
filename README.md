@@ -10,4 +10,4 @@ Build it:
 `docker build -t linux_tweet_app .`
 
 Run it:
-`docker container run --detach -p 80:80 linux_tweet_app`
+`docker container run --detach -p 80:80 linux_tweet_app` 
